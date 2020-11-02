@@ -12,11 +12,11 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
+        <li class="nav-item ${activePage eq 'Cars' ? ' active' : ''}">
+        <a class="nav-link" href="${pageContext.request.contextPath}/Cars">Cars</a>
+      </li>
       <li class="nav-item ${pageContext.request.requestURI eq '/ParkingLot1/about.jsp' ? ' active' : ''}">
         <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">About </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
