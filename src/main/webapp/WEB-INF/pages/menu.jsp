@@ -3,6 +3,7 @@
     Created on : Oct 26, 2020, 12:49:59 PM
     Author     : lucis
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container">
  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <a class="navbar-brand" href="${pageContext.request.contextPath}">Parking Lot</a>
@@ -12,18 +13,22 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-        <li class="nav-item ${activePage eq 'Cars' ? ' active' : ''}">
-        <a class="nav-link" href="${pageContext.request.contextPath}/Cars">Cars</a>
-      </li>
-       <li class="nav-item ${activePage eq 'Users' ? ' active' : ''}">
-        <a class="nav-link" href="${pageContext.request.contextPath}/Users">Users</a>
-      </li>
-      <li class="nav-item ${pageContext.request.requestURI eq '/ParkingLot1/about.jsp' ? ' active' : ''}">
-        <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">About </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
+        <c:if test="${pageContext.request.isUserInRole('AdminRole')}">
+            <li class="nav-item ${activePage eq 'Cars' ? ' active' : ''}">
+                <a class="nav-link" href="${pageContext.request.contextPath}/Cars">Cars</a>
+            </li>
+        </c:if>
+        <c:if test="${pageContext.request.isUserInRole('ClientRole')}">
+            <li class="nav-item ${activePage eq 'Users' ? ' active' : ''}">
+                <a class="nav-link" href="${pageContext.request.contextPath}/Users">Users</a>
+            </li>
+        </c:if>
+        <li class="nav-item ${pageContext.request.requestURI eq '/ParkingLot1/about.jsp' ? ' active' : ''}">
+            <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">About </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -35,7 +40,14 @@
     </ul>
       <ul class="nav-bar-nav ml-auto"> 
           <li class=""nav-item">
-              <a clas="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
+              <c:choose>
+                <c:when test="${pageContext.request.getRemoteUser() == null}">
+                <a clas="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
+                </c:when>
+                <c:otherwise>
+                <a clas="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>
+                </c:otherwise>
+              </c:choose>
           </li>
       </ul>
   </div>
