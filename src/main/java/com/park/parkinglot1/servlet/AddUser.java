@@ -5,9 +5,14 @@
  */
 package com.park.parkinglot1.servlet;
 
+import com.park.parkinglot1.ejb.UserBean;
+import com.park.parkinglot1.util.PasswordUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +22,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lucis
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole"}))
+@WebServlet(name = "AddUser", urlPatterns = {"/AddUser"})
+public class AddUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,6 +35,11 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    @Inject
+    UserBean userBean;
+    
+    
     
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -43,9 +54,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
-//processRequest(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/addUser.jsp").forward(request, response);
     }
 
     /**
@@ -59,8 +68,16 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("message", "Username or password incorrect");
-        request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+       String username = request.getParameter("username");
+       String email = request.getParameter("email");
+       String password = request.getParameter("password");
+       String position = request.getParameter("position");
+       
+       String passwordSha256 = PasswordUtil.convertToSha256(password);
+       
+       userBean.createUser(username, email, passwordSha256, position);
+       
+       response.sendRedirect(request.getContextPath()+"/Users");
     }
 
     /**
