@@ -39,13 +39,13 @@
       </li>
     </ul>
       <ul class="nav-bar-nav ml-auto"> 
-          <li class=""nav-item">
+          <li class="nav-item">
               <c:choose>
                 <c:when test="${pageContext.request.getRemoteUser() == null}">
-                <a clas="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
                 </c:when>
                 <c:otherwise>
-                <a clas="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>
                 </c:otherwise>
               </c:choose>
           </li>

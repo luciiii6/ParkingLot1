@@ -18,21 +18,27 @@
         <div class="col-md">
             <input type="checkbox" name="car_ids" value="${car.id}" />
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             ${car.licensePlate}
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             ${car.parkingSpot}
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             ${car.username}
         </div>
+        <div class="col-md-1">
+            <img src="${pageContext.request.contextPath}/Photos?id=${car.id}" width="48" />
+        </div>
         <div class="col-md-2">
-            <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}" role=""button"> Edit Car </a>
+            <a class="btn btn-secondary" href="${pageContext.request.contextPath}/AddPhoto?id=${car.id}" role="button"> Add Photo</a>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditCar?id=${car.id}" role="button"> Edit Car </a>
         </div>
     </div>
     </c:forEach>
-    
+    </form>
 
     <h5>Free parking spots : ${numberOfFreeParkingSpots}</h5>
 </t:pageTemplate>
